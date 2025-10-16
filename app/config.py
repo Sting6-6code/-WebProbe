@@ -13,14 +13,14 @@ class Settings(BaseSettings):
     # Database
     DATABASE_URL: str
 
-    # Redis
+    # Redis (Optional for now, required for Celery/Cache in later stages)
     REDIS_HOST: str = "localhost"
     REDIS_PORT: int = 6379
-    REDIS_URL: str
+    REDIS_URL: Optional[str] = None
 
-    # Celery
-    CELERY_BROKER_URL: str
-    CELERY_RESULT_BACKEND: str
+    # Celery (Optional for now, required in Stage 6)
+    CELERY_BROKER_URL: Optional[str] = None
+    CELERY_RESULT_BACKEND: Optional[str] = None
 
     # Application
     APP_NAME: str = "WebProbe"

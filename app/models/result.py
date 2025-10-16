@@ -22,7 +22,7 @@ class Result(Base, UUIDMixin, TimestampMixin):
     description = Column(Text, nullable=True)
     links = Column(JSONB, nullable=True, default=list)
     text_content = Column(Text, nullable=True)
-    metadata = Column(JSONB, nullable=True, default=dict)
+    extra_data = Column(JSONB, nullable=True, default=dict)  # 改名避免与 SQLAlchemy 保留字冲突
     scraped_at = Column(DateTime, default=datetime.utcnow, nullable=False)
 
     def __repr__(self):

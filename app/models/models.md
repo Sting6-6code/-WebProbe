@@ -314,7 +314,7 @@ metadata = Column(JSONB, default=dict)
 ```python
 # 灵活存储复杂数据
 result.links = ["link1", "link2", "link3"]  # 数组
-result.metadata = {
+result.extra_data = {
     "status_code": 200,
     "headers": {"content-type": "text/html"},
     "timing": {"dns": 10, "connect": 50}
@@ -322,7 +322,7 @@ result.metadata = {
 
 # 支持 JSON 查询
 db.query(Result).filter(
-    Result.metadata['status_code'].astext == '200'
+    Result.extra_data['status_code'].astext == '200'
 ).all()
 ```
 
@@ -944,7 +944,7 @@ failed_tasks = db.query(Task).filter(
 
 # JSONB 查询示例
 results = db.query(Result).filter(
-    Result.metadata['status_code'].astext == '200'
+    Result.extra_data['status_code'].astext == '200'
 ).all()
 ```
 

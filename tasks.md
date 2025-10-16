@@ -360,7 +360,7 @@ class Result(Base, UUIDMixin, TimestampMixin):
     description = Column(Text, nullable=True)
     links = Column(JSONB, nullable=True, default=list)
     text_content = Column(Text, nullable=True)
-    metadata = Column(JSONB, nullable=True, default=dict)
+    extra_data = Column(JSONB, nullable=True, default=dict)
     scraped_at = Column(DateTime, default=datetime.utcnow, nullable=False)
 
     def __repr__(self):
@@ -604,7 +604,7 @@ class ResultResponse(BaseModel):
     description: Optional[str] = None
     links: List[str] = []
     text_content: Optional[str] = None
-    metadata: Dict[str, Any] = {}
+    extra_data: Dict[str, Any] = {}
     scraped_at: datetime
     created_at: datetime
 
@@ -1175,7 +1175,7 @@ class ScraperService:
         Scrape a URL and extract content.
 
         Returns:
-            Dictionary with title, links, text_content, and metadata
+            Dictionary with title, links, text_content, and extra_data
         """
         try:
             # Make HTTP request
@@ -1192,7 +1192,7 @@ class ScraperService:
                 "description": self._extract_description(soup),
                 "links": self._extract_links(soup, url),
                 "text_content": self._extract_text(soup),
-                "metadata": {
+                "extra_data": {
                     "status_code": response.status_code,
                     "content_type": response.headers.get("Content-Type"),
                     "content_length": len(response.content)
@@ -1314,7 +1314,7 @@ def scrape_website_task(self, task_id: str, url: str):
             description=scrape_result.get("description"),
             links=scrape_result.get("links", []),
             text_content=scrape_result.get("text_content"),
-            metadata=scrape_result.get("metadata", {}),
+            extra_data=scrape_result.get("extra_data", {}),
             scraped_at=datetime.utcnow()
         )
         db.add(result)
